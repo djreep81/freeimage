@@ -21,7 +21,7 @@ SET(CMAKE_CXX_FLAGS "-w ${CMAKE_CXX_FLAGS}")
 INCLUDE_DIRECTORIES(${LIBPNG_DIR})
 INCLUDE_DIRECTORIES(${ZLIB_DIR})
 INCLUDE_DIRECTORIES(${FREEIMAGE_DIR}/Source/)
-INCLUDE_DIRECTORIES(${FREEIMAGE_DIR}/Source/librawlite)
+INCLUDE_DIRECTORIES(${FREEIMAGE_DIR}/Source/LibRawLite)
 INCLUDE_DIRECTORIES(${FREEIMAGE_DIR}/Source/OpenEXR/Imath)
 INCLUDE_DIRECTORIES(${FREEIMAGE_DIR}/Source/OpenEXR/IlmImf)
 INCLUDE_DIRECTORIES(${FREEIMAGE_DIR}/Source/OpenEXR/Iex)
@@ -79,3 +79,12 @@ ADD_LIBRARY (freeimage ${png_files} ${zlib_files} ${deprecation_files}
 			${libmng_files} ${libopenjpeg_files} ${libraw_files}
 			${libtiff_files} ${metadata_files} ${openexr_files}
 			)
+
+install(TARGETS freeimage 
+  RUNTIME DESTINATION bin 
+  LIBRARY DESTINATION lib 
+  ARCHIVE DESTINATION lib)
+                                                                                                                     
+install(FILES "Wrapper/FreeImagePlus/FreeImagePlus.h"   DESTINATION include)                                          
+install(FILES "Source/FreeImage.h"                      DESTINATION include)                                          
+  

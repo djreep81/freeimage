@@ -22,6 +22,7 @@ INCLUDE_DIRECTORIES(${LIBPNG_DIR})
 INCLUDE_DIRECTORIES(${ZLIB_DIR})
 INCLUDE_DIRECTORIES(${FREEIMAGE_DIR}/Source/)
 INCLUDE_DIRECTORIES(${FREEIMAGE_DIR}/Source/LibRawLite)
+INCLUDE_DIRECTORIES(${FREEIMAGE_DIR}/Source/LibOpenJPEG)
 INCLUDE_DIRECTORIES(${FREEIMAGE_DIR}/Source/OpenEXR/Imath)
 INCLUDE_DIRECTORIES(${FREEIMAGE_DIR}/Source/OpenEXR/IlmImf)
 INCLUDE_DIRECTORIES(${FREEIMAGE_DIR}/Source/OpenEXR/Iex)
@@ -34,7 +35,6 @@ FILE(GLOB png_files ${LIBPNG_DIR}/*.c)
 FILE(GLOB zlib_files ${ZLIB_DIR}/*.c)
 FILE(GLOB deprecation_files ${FREEIMAGE_DIR}/Source/DeprecationManager/*.cpp)
 FILE(GLOB_RECURSE freeimage_files ${FREEIMAGE_DIR}/Source/FreeImage/*.cpp )
-FILE(GLOB_RECURSE metadata_files ${FREEIMAGE_DIR}/Source/Metadata/*.cpp )
 FILE(GLOB_RECURSE freeimage_plus_files ${FREEIMAGE_DIR}/Wrapper/FreeImagePlus/*.cpp )
 FILE(GLOB_RECURSE freeimage_c_files ${FREEIMAGE_DIR}/Source/FreeImage/*.c )
 FILE(GLOB freeimagetoolkit_files ${FREEIMAGE_DIR}/Source/FreeImageToolkit/*.cpp )
@@ -43,7 +43,7 @@ FILE(GLOB libmng_files ${FREEIMAGE_DIR}/Source/LibMNG/*.c)
 FILE(GLOB libopenjpeg_files ${FREEIMAGE_DIR}/Source/LibOpenJPEG/*.c)
 FILE(GLOB_RECURSE libraw_files ${FREEIMAGE_DIR}/Source/LibRawLite/*.cpp)
 FILE(GLOB libtiff_files ${FREEIMAGE_DIR}/Source/LibTIFF4/*.c)
-FILE(GLOB metadata_files ${FREEIMAGE_DIR}/Source/metadata/*.cpp)
+FILE(GLOB metadata_files ${FREEIMAGE_DIR}/Source/Metadata/*.cpp)
 FILE(GLOB_RECURSE openexr_files ${FREEIMAGE_DIR}/Source/OpenEXR/*.cpp)
 
 LIST(REMOVE_ITEM zlib_files "${ZLIB_DIR}/example.c")
@@ -74,9 +74,10 @@ LIST(REMOVE_ITEM openexr_files "${FREEIMAGE_DIR}/Source/OpenEXR/IlmThread/IlmThr
 LIST(REMOVE_ITEM openexr_files "${FREEIMAGE_DIR}/Source/OpenEXR/Half/eLut.cpp")
 LIST(REMOVE_ITEM openexr_files "${FREEIMAGE_DIR}/Source/OpenEXR/Half/toFloat.cpp")
 LIST(REMOVE_ITEM openexr_files "${FREEIMAGE_DIR}/Source/OpenEXR/IlmImf/b44ExpLogTable.cpp")
+LIST(REMOVE_ITEM freeimage_files "${FREEIMAGE_DIR}/Source/FreeImage/PluginJXR.cpp")
 
 ADD_LIBRARY (freeimage ${png_files} ${zlib_files} ${deprecation_files} 
-			${freeimage_files} ${metadata_files} ${freeimage_c_files} ${freeimagetoolkit_files} ${freeimagelib_files} ${libjpeg_files}
+			${freeimage_files}  ${freeimage_c_files} ${freeimagetoolkit_files} ${freeimagelib_files} ${libjpeg_files}
 			${libmng_files} ${libopenjpeg_files} ${libraw_files}
 			${libtiff_files} ${metadata_files} ${openexr_files}
 			)

@@ -45,7 +45,10 @@
 //-----------------------------------------------------------------------------
 
 #include "OpenEXRConfig.h"
-#include <cstring>
+#if !defined(_WIN32) || defined(__MINGW32__)
+// needed for memset
+#include <string.h>
+#endif // _WIN32
 
 namespace Imf {
 

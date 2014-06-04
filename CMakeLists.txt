@@ -35,7 +35,7 @@ INCLUDE_DIRECTORIES(${FREEIMAGE_DIR}/Wrapper/FreeImagePlus/)
 INCLUDE_DIRECTORIES(${FREEIMAGE_DIR}/Source/LibWebP/src/)
 
 FILE(GLOB png_files ${LIBPNG_DIR}/*.c)
-#FILE(GLOB zlib_files ${ZLIB_DIR}/*.c)
+FILE(GLOB zlib_files ${ZLIB_DIR}/*.c)
 FILE(GLOB deprecation_files ${FREEIMAGE_DIR}/Source/DeprecationManager/*.cpp)
 FILE(GLOB_RECURSE freeimage_files ${FREEIMAGE_DIR}/Source/FreeImage/*.cpp )
 FILE(GLOB_RECURSE freeimage_plus_files ${FREEIMAGE_DIR}/Wrapper/FreeImagePlus/*.cpp )
@@ -50,8 +50,9 @@ FILE(GLOB metadata_files ${FREEIMAGE_DIR}/Source/Metadata/*.cpp)
 FILE(GLOB_RECURSE openexr_files ${FREEIMAGE_DIR}/Source/OpenEXR/*.cpp)
 FILE(GLOB_RECURSE libwebp_files ${FREEIMAGE_DIR}/Source/LibWebP/*.c)
 
-#LIST(REMOVE_ITEM zlib_files "${ZLIB_DIR}/example.c")
-#LIST(REMOVE_ITEM zlib_files "${ZLIB_DIR}/minigzip.c")
+
+LIST(REMOVE_ITEM zlib_files "${ZLIB_DIR}/example.c")
+LIST(REMOVE_ITEM zlib_files "${ZLIB_DIR}/minigzip.c")
 LIST(REMOVE_ITEM png_files "${LIBPNG_DIR}/pngtest.c")
 
 LIST(REMOVE_ITEM libjpeg_files "${FREEIMAGE_DIR}/Source/LibJPEG/jpegtran.c")
@@ -86,7 +87,7 @@ LIST(REMOVE_ITEM libraw_files "${FREEIMAGE_DIR}/Source/LibRawLite/internal/wf_fi
 ADD_LIBRARY (freeimage ${png_files} ${zlib_files} ${deprecation_files} 
 			${freeimage_files}  ${freeimage_c_files} ${freeimagetoolkit_files} ${freeimagelib_files} ${libjpeg_files}
 			${libmng_files} ${libopenjpeg_files} ${libraw_files}
-			${libtiff_files} ${metadata_files} ${openexr_files}
+			${libtiff_files} ${metadata_files} ${openexr_files} ${libwebp_files}
 			)
 
 install(TARGETS freeimage 

@@ -16,8 +16,8 @@ ADD_DEFINITIONS("-DMNG_BUILD_SO")
 ADD_DEFINITIONS("-DFIP_EXPORTS")
 ADD_DEFINITIONS("-DUSE_JPIP")
 
-SET(CMAKE_C_FLAGS "-w -fPIC ${CMAKE_C_FLAGS} ")
-SET(CMAKE_CXX_FLAGS "-w -fPIC ${CMAKE_CXX_FLAGS}")
+SET(CMAKE_C_FLAGS "-O3 -fPIC -fexceptions -fvisibility=hidden -DDISABLE_PERF_MEASUREMENT -D__ANSI__ -w -fPIC ${CMAKE_C_FLAGS} ")
+SET(CMAKE_CXX_FLAGS "-w -fPIC -O3 -fPIC -fexceptions -fvisibility=hidden -Wno-ctor-dtor-privacy -D__ANSI__ ${CMAKE_CXX_FLAGS}")
 
 INCLUDE_DIRECTORIES(${LIBPNG_DIR})
 INCLUDE_DIRECTORIES(${ZLIB_DIR})
@@ -33,6 +33,13 @@ INCLUDE_DIRECTORIES(${FREEIMAGE_DIR}/Source/OpenEXR/IlmThread)
 INCLUDE_DIRECTORIES(${FREEIMAGE_DIR}/Source/OpenEXR/)
 INCLUDE_DIRECTORIES(${FREEIMAGE_DIR}/Wrapper/FreeImagePlus/)
 INCLUDE_DIRECTORIES(${FREEIMAGE_DIR}/Source/LibWebP/src/)
+INCLUDE_DIRECTORIES(${FREEIMAGE_DIR}/Source/LibJXR/)
+INCLUDE_DIRECTORIES(${FREEIMAGE_DIR}/Source/LibJXR/jxrgluelib)
+INCLUDE_DIRECTORIES(${FREEIMAGE_DIR}/Source/LibJXR/image/sys)
+INCLUDE_DIRECTORIES(${FREEIMAGE_DIR}/Source/LibJXR/image/x86)
+INCLUDE_DIRECTORIES(${FREEIMAGE_DIR}/Source/LibJXR/image/encode)
+INCLUDE_DIRECTORIES(${FREEIMAGE_DIR}/Source/LibJXR/image/decode)
+INCLUDE_DIRECTORIES(${FREEIMAGE_DIR}/Source/LibJXR/common/include)
 
 FILE(GLOB png_files ${LIBPNG_DIR}/*.c)
 FILE(GLOB zlib_files ${ZLIB_DIR}/*.c)
@@ -49,6 +56,7 @@ FILE(GLOB libtiff_files ${FREEIMAGE_DIR}/Source/LibTIFF4/*.c)
 FILE(GLOB metadata_files ${FREEIMAGE_DIR}/Source/Metadata/*.cpp)
 FILE(GLOB_RECURSE openexr_files ${FREEIMAGE_DIR}/Source/OpenEXR/*.cpp)
 FILE(GLOB_RECURSE libwebp_files ${FREEIMAGE_DIR}/Source/LibWebP/*.c)
+FILE(GLOB_RECURSE libjxr_files ${FREEIMAGE_DIR}/Source/LibJXR/*.c)
 
 
 LIST(REMOVE_ITEM zlib_files "${ZLIB_DIR}/example.c")
@@ -79,7 +87,6 @@ LIST(REMOVE_ITEM openexr_files "${FREEIMAGE_DIR}/Source/OpenEXR/IlmThread/IlmThr
 LIST(REMOVE_ITEM openexr_files "${FREEIMAGE_DIR}/Source/OpenEXR/Half/eLut.cpp")
 LIST(REMOVE_ITEM openexr_files "${FREEIMAGE_DIR}/Source/OpenEXR/Half/toFloat.cpp")
 LIST(REMOVE_ITEM openexr_files "${FREEIMAGE_DIR}/Source/OpenEXR/IlmImf/b44ExpLogTable.cpp")
-LIST(REMOVE_ITEM freeimage_files "${FREEIMAGE_DIR}/Source/FreeImage/PluginJXR.cpp")
 LIST(REMOVE_ITEM libraw_files "${FREEIMAGE_DIR}/Source/LibRawLite/internal/aahd_demosaic.cpp")
 LIST(REMOVE_ITEM libraw_files "${FREEIMAGE_DIR}/Source/LibRawLite/internal/dht_demosaic.cpp")
 LIST(REMOVE_ITEM libraw_files "${FREEIMAGE_DIR}/Source/LibRawLite/internal/wf_filtering.cpp")
@@ -87,7 +94,7 @@ LIST(REMOVE_ITEM libraw_files "${FREEIMAGE_DIR}/Source/LibRawLite/internal/wf_fi
 ADD_LIBRARY (freeimage ${png_files} ${zlib_files} ${deprecation_files} 
 			${freeimage_files}  ${freeimage_c_files} ${freeimagetoolkit_files} ${freeimagelib_files} ${libjpeg_files}
 			${libmng_files} ${libopenjpeg_files} ${libraw_files}
-			${libtiff_files} ${metadata_files} ${openexr_files} ${libwebp_files}
+			${libtiff_files} ${metadata_files} ${openexr_files} ${libwebp_files} ${libjxr_files}
 			)
 
 install(TARGETS freeimage 

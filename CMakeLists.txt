@@ -1,6 +1,15 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(freeimage)
 
+INCLUDE (CheckIncludeFiles)
+CHECK_INCLUDE_FILES (search.h CMAKE_HAVE_SEARCH_H)
+if (CMAKE_HAVE_SEARCH_H)
+  Message("Search file found (search.h)")
+else (CMAKE_HAVE_SEARCH_H)
+  Message("Search file NOT found (search.h)")
+endif (CMAKE_HAVE_SEARCH_H)
+CONFIGURE_FILE(Source/LibTIFF4/tif_config.h ${CMAKE_CURRENT_SOURCE_DIR}/Source/LibTIFF4/tif_config.h)
+
 SET(FREEIMAGE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 SET(LIBPNG_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Source/LibPNG/)
 #SET(ZLIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Source/zlib/)
@@ -90,18 +99,21 @@ LIST(REMOVE_ITEM openexr_files "${FREEIMAGE_DIR}/Source/OpenEXR/IlmImf/b44ExpLog
 LIST(REMOVE_ITEM libraw_files "${FREEIMAGE_DIR}/Source/LibRawLite/internal/aahd_demosaic.cpp")
 LIST(REMOVE_ITEM libraw_files "${FREEIMAGE_DIR}/Source/LibRawLite/internal/dht_demosaic.cpp")
 LIST(REMOVE_ITEM libraw_files "${FREEIMAGE_DIR}/Source/LibRawLite/internal/wf_filtering.cpp")
+LIST(REMOVE_ITEM libwebp_files "${FREEIMAGE_DIR}/Source/LibWebP/src/dsp/dec_neon.c")
+LIST(REMOVE_ITEM libwebp_files "${FREEIMAGE_DIR}/Source/LibWebP/src/dsp/enc_neon.c")
+LIST(REMOVE_ITEM libwebp_files "${FREEIMAGE_DIR}/Source/LibWebP/src/dsp/upsampling_neon.c")
 
 ADD_LIBRARY (freeimage ${png_files} ${zlib_files} ${deprecation_files} 
-			${freeimage_files}  ${freeimage_c_files} ${freeimagetoolkit_files} ${freeimagelib_files} ${libjpeg_files}
-			${libmng_files} ${libopenjpeg_files} ${libraw_files}
-			${libtiff_files} ${metadata_files} ${openexr_files} ${libwebp_files} ${libjxr_files}
-			)
+  ${freeimage_files}  ${freeimage_c_files} ${freeimagetoolkit_files} ${freeimagelib_files} ${libjpeg_files}
+  ${libmng_files} ${libopenjpeg_files} ${libraw_files}
+  ${libtiff_files} ${metadata_files} ${openexr_files} ${libwebp_files} ${libjxr_files}
+  )
 
 install(TARGETS freeimage 
   RUNTIME DESTINATION bin 
   LIBRARY DESTINATION lib 
   ARCHIVE DESTINATION lib)
-                                                                                                                     
+
 install(FILES "Wrapper/FreeImagePlus/FreeImagePlus.h"   DESTINATION include)                                          
 install(FILES "Source/FreeImage.h"                      DESTINATION include)                                          
-  
+

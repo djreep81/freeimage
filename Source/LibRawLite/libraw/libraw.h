@@ -228,6 +228,7 @@ protected:
     int         own_filtering_supported(){ return 0;}
     void        identify();
     void        write_ppm_tiff ();
+    void        swab(const void *from, void *to, ssize_t n);
     void        convert_to_rgb();
     void        remove_zeroes();
     void        crop_masked_pixels();

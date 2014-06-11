@@ -10,6 +10,17 @@ else (CMAKE_HAVE_SEARCH_H)
 endif (CMAKE_HAVE_SEARCH_H)
 CONFIGURE_FILE(Source/LibTIFF4/tif_config.h ${CMAKE_CURRENT_SOURCE_DIR}/Source/LibTIFF4/tif_config.h)
 
+
+INCLUDE (CheckIncludeFiles)
+CHECK_INCLUDE_FILES (machine/cpu-features.h CMAKE_HAVE_MCPUFEATURES)
+CHECK_INCLUDE_FILES (asm/cpu-features.h     CMAKE_HAVE_ACPUFEATURES)
+
+if (CMAKE_HAVE_MCPUFEATURES || CMAKE_HAVE_ACPUFEATURES)
+  Message("Adding Android cpu features ${ANDROID_NDK}/sources/android/cpufeatures")
+  include_directories("${ANDROID_NDK}/sources/android/cpufeatures")
+endif (CMAKE_HAVE_MCPUFEATURES || CMAKE_HAVE_ACPUFEATURES)
+
+
 SET(FREEIMAGE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 SET(LIBPNG_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Source/LibPNG/)
 #SET(ZLIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Source/zlib/)

@@ -110,14 +110,27 @@ LIST(REMOVE_ITEM openexr_files "${FREEIMAGE_DIR}/Source/OpenEXR/IlmImf/b44ExpLog
 LIST(REMOVE_ITEM libraw_files "${FREEIMAGE_DIR}/Source/LibRawLite/internal/aahd_demosaic.cpp")
 LIST(REMOVE_ITEM libraw_files "${FREEIMAGE_DIR}/Source/LibRawLite/internal/dht_demosaic.cpp")
 LIST(REMOVE_ITEM libraw_files "${FREEIMAGE_DIR}/Source/LibRawLite/internal/wf_filtering.cpp")
-LIST(REMOVE_ITEM libwebp_files "${FREEIMAGE_DIR}/Source/LibWebP/src/dsp/dec_neon.c")
-LIST(REMOVE_ITEM libwebp_files "${FREEIMAGE_DIR}/Source/LibWebP/src/dsp/enc_neon.c")
-LIST(REMOVE_ITEM libwebp_files "${FREEIMAGE_DIR}/Source/LibWebP/src/dsp/upsampling_neon.c")
+
+#LIST(REMOVE_ITEM libwebp_files "${FREEIMAGE_DIR}/Source/LibWebP/src/demux/demux.c")
+#LIST(REMOVE_ITEM freeimage_files "${FREEIMAGE_DIR}/Source/FreeImage/PluginWebP.cpp")
+#for android TARGET_ARCH_ABI == armeabi-v7a then include the neon below
+#LIST(REMOVE_ITEM libwebp_files "${FREEIMAGE_DIR}/Source/LibWebP/src/dsp/dec_neon.c")
+#LIST(REMOVE_ITEM libwebp_files "${FREEIMAGE_DIR}/Source/LibWebP/src/dsp/enc_neon.c")
+#LIST(REMOVE_ITEM libwebp_files "${FREEIMAGE_DIR}/Source/LibWebP/src/dsp/upsampling_neon.c")
+######################################
+#LIST(REMOVE_ITEM libwebp_files "${FREEIMAGE_DIR}/Source/LibWebP/src/dsp/dec_clip_tables.c")
+#LIST(REMOVE_ITEM libwebp_files "${FREEIMAGE_DIR}/Source/LibWebP/src/dsp/dec_mips32.c")
+#LIST(REMOVE_ITEM libwebp_files "${FREEIMAGE_DIR}/Source/LibWebP/src/dsp/upsampling_mips32.c")
+
+
+if (ANDROID)
+  FILE(GLOB_RECURSE libwebp_files ${FREEIMAGE_DIR}/Source/LibWebP/*.doesnotexist)
+endif()
 
 ADD_LIBRARY (freeimage ${png_files} ${zlib_files} ${deprecation_files} 
   ${freeimage_files}  ${freeimage_c_files} ${freeimagetoolkit_files} ${freeimagelib_files} ${libjpeg_files}
   ${libmng_files} ${libopenjpeg_files} ${libraw_files}
-  ${libtiff_files} ${metadata_files} ${openexr_files} ${libwebp_files} ${libjxr_files}
+  ${libtiff_files} ${metadata_files} ${openexr_files} ${libwebp_files} ${libjxr_files} 
   )
 
 install(TARGETS freeimage 
